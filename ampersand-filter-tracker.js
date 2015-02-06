@@ -15,17 +15,15 @@
     initialize: function() {
       _.each(this.handles, function(handle) {
         handle.active = false;
-        _.each(handle.props, function(prop) {
-          handle.model.on('change:' + prop, function(model, prop) {
-            handle.active = false;
-            _.each(handle.props, function(prop, index) {
-              if ((typeof handle.clearValues[index] !== 'function' && model[prop] !== handle.clearValues[index]) || (typeof handle.clearValues[index] === 'function' && handle.clearValues[index].call(handle.model))) {
-                handle.active = true;
-              }
-            });
-            this._view.renderFilters(this.handles);
-            this.filter = this.generateFilter(this.handles);
-          }.bind(this));
+        handle.model.on(_.map(handle.props, function(prop) { return 'change:' + prop; }).join(' '), function(model, prop) {
+          handle.active = false;
+          _.each(handle.props, function(prop, index) {
+            if ((typeof handle.clearValues[index] !== 'function' && model[prop] !== handle.clearValues[index]) || (typeof handle.clearValues[index] === 'function' && handle.clearValues[index].call(handle.model))) {
+              handle.active = true;
+            }
+          });
+          this._view.renderFilters(this.handles);
+          this.filter = this.generateFilter(this.handles);
         }.bind(this));
       }.bind(this));
     },
