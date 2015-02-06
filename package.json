@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/suitupalex/ampersand-filter-tracker"
+    "url": "https://github.com/helpdotcom/ampersand-filter-tracker"
   },
   "keywords": [
     "ampersand",
@@ -18,9 +18,9 @@
   "author": "Alexander Martin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/suitupalex/ampersand-filter-tracker/issues"
+    "url": "https://github.com/helpdotcom/ampersand-filter-tracker/issues"
   },
-  "homepage": "https://github.com/suitupalex/ampersand-filter-tracker",
+  "homepage": "https://github.com/helpdotcom/ampersand-filter-tracker",
   "dependencies": {
     "ampersand-state": "^4.4.4",
     "ampersand-view": "^7.2.0",
