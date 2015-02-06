@@ -14,7 +14,6 @@
     },
     initialize: function() {
       _.each(this.handles, function(handle) {
-        console.log(handle.model);
         handle.active = false;
         _.each(handle.props, function(prop) {
           handle.model.on('change:' + prop, function(model, prop) {
