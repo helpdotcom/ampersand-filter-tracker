@@ -16,11 +16,9 @@
       _.each(this.handles, function(handle) {
         handle.active = false;
         handle.model.on(_.map(handle.props, function(prop) { return 'change:' + prop; }).join(' '), function(model, prop) {
-          handle.active = false;
-          _.each(handle.props, function(prop, index) {
-            if ((typeof handle.clearValues[index] !== 'function' && model[prop] !== handle.clearValues[index]) || (typeof handle.clearValues[index] === 'function' && handle.clearValues[index].call(handle.model))) {
-              handle.active = true;
-            }
+          handle.active = _.any(handle.props, function(prop, index) {
+            var clearValue = handle.clearValues[index];
+            return _.isFunction(clearValue) ? clearValue.call(handle.model) : model[prop] !== clearValue;
           });
           this._view.renderFilters(this.handles);
           this.filter = this.generateFilter(this.handles);
