@@ -23,13 +23,13 @@
           this._view.renderFilters(this.handles);
           this.filter = this.generateFilter(this.handles);
         }.bind(this));
-      }.bind(this));
+      }, this);
     },
     cancelFilter: function(event) {
       d3.select(event.target.parentNode).each(function(d) {
         d.active = false;
         d.clear.call(d.model);
-      }.bind(this));
+      });
     },
     generateFilter: function(handles) {
       return function(model) {
