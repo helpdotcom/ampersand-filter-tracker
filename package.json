@@ -1,0 +1,30 @@
+{
+  "name": "ampersand-filter-tracker",
+  "version": "0.1.0",
+  "description": "Creates both a GUI and a filter from multiple models.",
+  "main": "ampersand-filter-tracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/helpdotcom/ampersand-filter-tracker"
+  },
+  "keywords": [
+    "ampersand",
+    "filter",
+    "tracker"
+  ],
+  "author": "Alexander Martin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/helpdotcom/ampersand-filter-tracker/issues"
+  },
+  "homepage": "https://github.com/helpdotcom/ampersand-filter-tracker",
+  "dependencies": {
+    "ampersand-state": "^4.4.4",
+    "ampersand-view": "^7.2.0",
+    "d3": "^3.5.3",
+    "lodash": "^3.1.0"
+  }
+}
