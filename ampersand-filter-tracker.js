@@ -33,11 +33,9 @@
     },
     generateFilter: function(handles) {
       return function(model) {
-        var pass = true;
-        _.each(handles, function(handle) {
-          pass = pass && handle.filter(model);
+        return _.all(handles, function(handle) {
+          return handle.filter(model);
         });
-        return pass;
       };
     }
   });
