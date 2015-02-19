@@ -11,7 +11,7 @@
     },
     session: {
       handles: 'array',
-      onApply: [ 'function', false, function() { return function() {}; } ]
+      onApply: [ 'function', false, _.constant(_.noop) ]
     },
     initialize: function() {
       _.each(this.handles, function(handle) {
@@ -154,7 +154,7 @@
         .text(function(d) { return d.output.call(d.model); });
 
       this.div
-        .style('display', _.any(handles, function(handle) { return handle.active; }) ? undefined : 'none');
+        .style('display', _.any(handles, 'active') ? undefined : 'none');
     },
     applyFilters: function() {
       this.model.applyFilters();
