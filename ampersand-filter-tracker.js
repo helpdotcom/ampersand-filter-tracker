@@ -10,7 +10,8 @@
       filter: 'function'
     },
     session: {
-      handles: 'array'
+      handles: 'array',
+      onApply: [ 'function', false, function() { return function() {}; } ]
     },
     initialize: function() {
       _.each(this.handles, function(handle) {
@@ -25,10 +26,25 @@
         }.bind(this));
       }, this);
     },
+    applyFilters: function() {
+      var props = {};
+      _.each(this.handles, function(handle) {
+        _.each(handle.props, function(prop) {
+          props[prop] = handle.model[prop];
+        });
+      });
+      this.onApply(props);
+    },
     cancelFilter: function(event) {
       d3.select(event.target.parentNode).each(function(d) {
         d.active = false;
         d.clear.call(d.model);
+      });
+    },
+    cancelAllFilters: function() {
+      _.each(this.handles, function(handle) {
+        handle.active = false;
+        handle.clear.call(handle.model);
       });
     },
     generateFilter: function(handles) {
@@ -41,19 +57,36 @@
   });
 
   var FilterTrackerView = AmpersandView.extend({
-    template: '<ul></ul>',
+    template: '<div></div>',
     autoRender: true,
     initialize: function() {
       this.model._view = this;
     },
     events: {
-      'click .ampersand-filter-tracker-item-cancel': 'cancelFilter'
+      'click .ampersand-filter-tracker-item-cancel': 'cancelFilter',
+      'click .ampersand-filter-tracker-buttons-apply': 'applyFilters',
+      'click .ampersand-filter-tracker-buttons-cancel': 'cancelAllFilters'
     },
     render: function() {
       AmpersandView.prototype.render.call(this);
 
-      var filterTracker = this.ul = d3.select(this.el)
+      var filterTracker = d3.select(this.el)
         .attr('class', 'ampersand-filter-tracker');
+
+      var filterTrackerUl = this.ul = filterTracker.append('ul')
+        .attr('class', 'ampersand-filter-tracker-ul');
+
+      var filterTrackerButtons = this.div = filterTracker.append('div')
+        .attr('class', 'ampersand-filter-tracker-buttons')
+        .style('display', 'none');
+
+      var filterTrackerCancel = filterTrackerButtons.append('button')
+        .attr('class', 'ampersand-filter-tracker-buttons-cancel')
+        .text('cancel');
+
+      var filterTrackerAppply = filterTrackerButtons.append('button')
+        .attr('class', 'ampersand-filter-tracker-buttons-apply')
+        .text('apply');
 
       this.renderFilters(this.model.handles);
     },
@@ -119,9 +152,19 @@
 
       filterContainers.select('span.ampersand-filter-tracker-item-text')
         .text(function(d) { return d.output.call(d.model); });
+
+      this.div
+        .style('display', _.any(handles, function(handle) { return handle.active; }) ? undefined : 'none');
+    },
+    applyFilters: function() {
+      this.model.applyFilters();
     },
     cancelFilter: function(event) {
       this.model.cancelFilter(event);
+      this.renderFilters(this.model.handles);
+    },
+    cancelAllFilters: function(event) {
+      this.model.cancelAllFilters();
       this.renderFilters(this.model.handles);
     }
   });
