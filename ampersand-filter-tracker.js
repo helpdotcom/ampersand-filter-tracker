@@ -26,14 +26,14 @@
         }.bind(this));
       }, this);
     },
-    applyFilters: function() {
+    applyFilters: function(options) {
       var props = {};
       _.each(this.handles, function(handle) {
         _.each(handle.props, function(prop) {
           props[prop] = handle.model[prop];
         });
       });
-      this.onApply(props);
+      this.onApply(props, options);
     },
     cancelFilter: function(event) {
       d3.select(event.target.parentNode).each(function(d) {
@@ -157,7 +157,7 @@
         .style('display', _.any(handles, 'active') ? undefined : 'none');
     },
     applyFilters: function() {
-      this.model.applyFilters();
+      this.model.applyFilters({});
     },
     cancelFilter: function(event) {
       this.model.cancelFilter(event);
