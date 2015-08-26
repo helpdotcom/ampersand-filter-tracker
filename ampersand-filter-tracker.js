@@ -77,8 +77,7 @@
         .attr('class', 'ampersand-filter-tracker-ul');
 
       var filterTrackerButtons = this.div = filterTracker.append('div')
-        .attr('class', 'ampersand-filter-tracker-buttons')
-        .style('display', 'none');
+        .attr('class', 'ampersand-filter-tracker-buttons');
 
       var filterTrackerCancel = filterTrackerButtons.append('button')
         .attr('class', 'ampersand-filter-tracker-buttons-cancel')
@@ -152,9 +151,6 @@
 
       filterContainers.select('span.ampersand-filter-tracker-item-text')
         .text(function(d) { return d.output.call(d.model); });
-
-      this.div
-        .style('display', _.any(handles, 'active') ? undefined : 'none');
     },
     applyFilters: function() {
       this.model.applyFilters({});
