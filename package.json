@@ -1,6 +1,6 @@
 {
   "name": "ampersand-filter-tracker",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Creates both a GUI and a filter from multiple models.",
   "main": "ampersand-filter-tracker.js",
   "scripts": {

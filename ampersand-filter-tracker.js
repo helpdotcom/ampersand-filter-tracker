@@ -7,11 +7,11 @@
 
   var FilterTrackerState = AmpersandState.extend({
     props: {
-      filter: 'function'
+      filter: 'any'
     },
     session: {
       handles: 'array',
-      onApply: [ 'function', false, _.constant(_.noop) ]
+      onApply: [ 'any', false, _.constant(_.noop) ]
     },
     initialize: function() {
       _.each(this.handles, function(handle) {
